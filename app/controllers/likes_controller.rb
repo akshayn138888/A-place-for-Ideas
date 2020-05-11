@@ -22,7 +22,7 @@ class LikesController < ApplicationController
         if !can?(:destroy, like)
           flash[:warning] = "you can't destroy a like you don't own"
         elsif like.destroy
-          flash[:success] = "Idea Unliked"
+          flash[:success] = "Idea Un-liked"
         else
           flash[:warning] = "It's rude to unlike something you've already liked"
         end

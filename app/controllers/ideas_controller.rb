@@ -4,8 +4,7 @@ class IdeasController < ApplicationController
   
         def index
           @ideas = Idea.all.order('updated_at DESC')
-          @idea = Idea.find(current_user.id)
-          @like = @idea.likes.find_by(user: current_user)
+         
 
         end
       
@@ -50,7 +49,7 @@ class IdeasController < ApplicationController
           id = params[:id]
           @idea = Idea.find(id)
           @idea.destroy
-          redirect_to posts_path
+          redirect_to ideas_path
         end
         private
         def authorize! 
