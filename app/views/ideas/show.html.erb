@@ -1,0 +1,69 @@
+<div class = "container">
+  <div class="shadow-sm p-3 mb-5 bg-white rounded overflow-wrap">
+    <h1>
+      <%= @idea.title %>
+    </h1>
+    <p class="shadow-none p-3 mb-5 bg-light rounded"><%= @idea.description %></p>
+    <p class='text-muted'><%= @idea.user.name %> 
+    <small>Liked by: <%= @idea.likes.count %></small>
+     <small>
+    <% if @like.present? %>
+      <%= link_to(
+          "Unlike",
+          like_path(@like),
+          method: :delete, 
+          class: 'btn btn-primary'
+        )
+      %>
+    <% else %>
+      <%= link_to(
+          "Like",
+          idea_likes_path(@idea),
+          method: :post,
+          class: 'btn btn-primary'
+        )
+      %>
+    <% end %>
+  </small>
+
+    <%# link_to arguments: name, path, ostions_object %>
+    <% if can? :crud, @idea %>
+    <div>
+      <%= link_to( "Edit", edit_idea_path(@idea), class: 'btn btn-outline-primary') %> 
+      <%= link_to( "Delete", idea_path(@idea), method: :delete, class: 'btn btn-outline-primary', data: { confirm: 'are you sure?' } ) %>
+      </div>
+    </div>
+    <% end %> 
+
+  <%= form_with(model: [@idea, @review], local: true) do |f| %> <% if
+  @review.errors.full_messages.each do |msg| %>
+  <ul>
+    <li class="text-danger"><%= msg %></li>
+  </ul>
+  <% end %> <% end %>
+  <div class="form-group">
+    <%= f.text_area( :body, cols: 50, rows: 5, placeholder: "Any suggestions you have?", class: "form-control" ) %>
+  </div>
+  <%= f.submit "Submit", class: "btn btn-outline-primary" %> <br>
+  <br>
+  <% end %>
+
+  <ul class="list-group review-list">
+    <% @reviews.each do |review| %>
+    <li class="list-group-item">
+      <p>
+        <%= review.body %><br />
+        <small>
+     Review Added:  <%= time_ago_in_words(review.created_at) %> By <%= review.user.name %> 
+        </small>	       
+        <% if can? :crud, review %>
+        <small>
+          <%= link_to( "Delete", idea_review_path(@idea, review), method:
+          :delete, data: { confirm: "Are you sure?" }, class: 'text-primary', ) %>
+        </small>
+        <% end %> 
+      </p>
+    </li>
+    <% end %>
+  </ul>
+</div>

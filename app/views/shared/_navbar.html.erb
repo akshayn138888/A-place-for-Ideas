@@ -1,0 +1,23 @@
+<nav class="navbar navbar-light bg-light">
+    <div style="width: 20%;">
+      <a class="navbar-brand text-primary" href = "/">Idea Factory</a>
+    </div>
+    <div style="width: 80%;">
+      <div class="float-right" style="width: 25%;">
+        <div class="d-flex justify-content-around align-items-end">
+          <a href="/ideas/new">
+            <h5 class="nav-item text-primary">New Idea</h5>
+          </a>
+     <% if user_signed_in? %>
+       <h5 class="nav-item text-primary"><%= current_user.name  %> </h5>
+
+      <%= link_to "Logout", session_path, method: :delete, class: 'btn btn-danger' %>
+
+     <% else %>    
+      <%= link_to "Log In", new_session_path, class: 'btn btn-primary'%>
+      <%= link_to "Sign Up", new_user_path, class: 'btn btn-warning' %>
+     <% end %>
+       </div>
+      </div>
+    </div>
+  </nav>

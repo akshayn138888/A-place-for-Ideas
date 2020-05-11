@@ -1,0 +1,40 @@
+
+<div class='row'>
+  <div class='col-2'>
+  </div>
+  <div class='col-10'>
+   <div class= 'container'>
+    <% @ideas.each do |idea| %>
+    <%# if you pass a instance to link_to it will create the href='/questions/:id' %>
+      <%= link_to idea do %>
+        <li class='list-group-item'>
+          <p><%= idea.id %> <%= idea.title %></p>
+         </li>
+      <% end %>
+        <p><%= idea.description  %> </p>
+        
+        <small>Liked: <%= idea.likes.count %></small>
+        
+<% if idea.likes.find_by(user: current_user).present?%>
+      <%= link_to(
+          "Unlike",
+          like_path(idea.likes.find_by(user: current_user)),
+          method: :delete, 
+          class: 'btn btn-primary'
+        )
+      %>
+    <% else %>
+      <%= link_to(
+          "Like",
+          idea_likes_path(idea),
+          method: :post,
+          class: 'btn btn-primary'
+        )
+      %>
+    <% end %>
+  </small>
+    <% end %>  
+    </div>
+  </div>
+  
+</div>
