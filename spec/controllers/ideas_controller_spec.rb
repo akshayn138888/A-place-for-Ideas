@@ -41,7 +41,7 @@ RSpec.describe IdeasController, type: :controller do
               it "does not insert a new record in the database" do
                 session[:user_id] = current_user.id
                 before_count = Idea.count
-                post(:create, params: { question: {title: '', body:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'} })
+                post(:create, params: { idea: {title: '', description:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghij'} })
                 after_count = Idea.count
                 expect(after_count).to(eq(before_count))
               end
